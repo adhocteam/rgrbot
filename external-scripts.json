@@ -7,5 +7,9 @@
   "hubot-maps",
   "hubot-redis-brain",
   "hubot-rules",
-  "hubot-shipit"
+  "hubot-shipit",
+    "hubot-github-pr-reporter",
+    "hubot-jira-links",
+    "hubot-slack-utils",
+    "hubot-appearin"
 ]
