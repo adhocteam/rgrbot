@@ -11,5 +11,7 @@
     "hubot-github-pr-reporter",
     "hubot-jira-links",
     "hubot-slack-utils",
-    "hubot-appearin"
+    "hubot-appearin",
+    "hubot-timezone",
+    "hubot-acrogov"
 ]
