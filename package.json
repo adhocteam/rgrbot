@@ -23,7 +23,8 @@
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^4.3.3",
     "hubot-slack-utils": "0.0.5",
-    "hubot-timezone": "^1.0.1"
+    "hubot-timezone": "^1.0.1",
+    "strava-v3": "^1.12.1"
   },
   "engines": {
     "node": "0.10.x"
