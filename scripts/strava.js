@@ -33,11 +33,12 @@ let processPayload = (res, payload) => {
     return 0;
   });
 
-  let output = "*Distance leaders over the past seven days*\n"
+  let output = ":bicyclist: *Distance leaders over the past seven days*\n"
   for (let i = 0; i < sortable.length && i < 10; i++) {
+    let place_num = i + 1;
     let distance = sortable[i].distance * MILES_PER_METER;
     if (distance > 0)
-      output += ':place_' + i + 1 + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Number(distance).toFixed(2) + ' mi)';
+      output += ':place_' + place_num + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Number(distance).toFixed(2) + ' mi)\n';
   }
 
   res.send(output);
