@@ -5,6 +5,7 @@
   "author": "oren@adhocteam.us",
   "description": "A simple helpful robot for your Company",
   "dependencies": {
+    "github": "^9.2.0",
     "githubot": "^1.0.1",
     "hubot": "^2.19.0",
     "hubot-acrogov": "^2.4.1",

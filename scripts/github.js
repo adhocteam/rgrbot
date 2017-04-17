@@ -1,0 +1,41 @@
+var GitHubApi = require("github");
+
+var github = new GitHubApi({
+    debug: true,
+    protocol: "https",
+    host: "github.cms.gov",
+    pathPrefix: "/api/v3",
+    headers: {
+	"user-agent": "rgrbot",
+    },
+    Promise: require('bluebird'),
+    followRedirects: false,
+    timeout: 5000,
+});
+
+github.authenticate({
+    type: "basic",
+    username: process.env.HUBOT_GITHUB_USER,
+    password: process.env.HUBOT_GITHUB_TOKEN
+});
+
+module.exports = function (robot) {
+  robot.hear(/github.cms.gov\/(.*)\/(.*)\/pull\/([0-9]+)/i, function (res) {
+    // console.log(res.match);
+    let owner = res.match[1];
+    let repo = res.match[2];
+    let number = res.match[3];
+
+    github.pullRequests.get({
+      owner: owner,
+      repo: repo,
+      number: number
+    }, (err, response) => {
+      data = response.data;
+      let output = '>>>:github: GitHub\n';
+      output += '*' + data.title + '* by ' + data.user.login + ' · Pull Request #' + data.number + ' · ' + data.base.repo.full_name + '\n'
+      output += data.base.repo.name + ' - ' + data.base.repo.description + '\n';
+      res.send(output);
+    });
+  });
+}
