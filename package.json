@@ -25,6 +25,7 @@
     "hubot-slack": "^4.3.3",
     "hubot-slack-utils": "0.0.5",
     "hubot-timezone": "^1.0.1",
+    "humanize-plus": "^1.8.2",
     "strava-v3": "^1.12.1"
   },
   "engines": {
