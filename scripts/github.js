@@ -39,6 +39,33 @@ module.exports = function (robot) {
     });
   });
 
+  robot.hear(/list open qpp prs/i, function (res) {
+    let owner = "qpp";
+    github.pullRequests.getAll({
+      owner,
+      repo: "qpp-ui",
+      direction: "asc",
+      state: "open",
+      sort: "created",
+    }, printPrs(res));
+
+    github.pullRequests.getAll({
+      owner,
+      repo: "qpp-auth-service",
+      direction: "asc",
+      state: "open",
+      sort: "created",
+    }, printPrs(res));
+
+    github.pullRequests.getAll({
+      owner,
+      repo: "qpp-deploy",
+      direction: "asc",
+      state: "open",
+      sort: "created",
+    }, printPrs(res));
+  });
+
   robot.hear(/list open prs for (.*)\/(.*)/i, function (res) {
     let owner = res.match[1];
     let repo = res.match[2];
@@ -49,16 +76,24 @@ module.exports = function (robot) {
       direction: "asc",
       state: "open",
       sort: "created",
-    }, (err, response) => {
-      let output = '';
-      for (let i = 0; i < response.data.length; i++) {
-        let data = response.data[i];
-        output += `
-${data.title}, by ${data.user.login}.
-↳ ${data.url}
-`;
-      }
-      res.send(output);
-    });
+    }, printPrs(res));
   });
+}
+
+let printPrs = res => {
+  return (err, response) => {
+    if (!err) {
+        let output = '';
+        for (let i = 0; i < response.data.length; i++) {
+          let data = response.data[i];
+          output += `
+  ${data.title}, by ${data.user.login}.
+  ↳ ${data.url}
+  `;
+        }
+        res.send(output);
+      } else {
+        console.log(err);
+      }
+  }
 }
