@@ -83,11 +83,10 @@ module.exports = function (robot) {
 let printPrs = res => {
   return (err, response) => {
     if (!err) {
-        let output = '';
+        let output = ':github:\n';
         for (let i = 0; i < response.data.length; i++) {
           let data = response.data[i];
-          output += `
-  ${data.title}, by ${data.user.login}.
+          output += `${data.title}, by ${data.user.login}.
   ↳ ${data.url}
   `;
         }
