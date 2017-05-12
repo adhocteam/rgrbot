@@ -38,4 +38,27 @@ module.exports = function (robot) {
       res.send(output);
     });
   });
+
+  robot.hear(/list open prs for (.*)\/(.*)/i, function (res) {
+    let owner = res.match[1];
+    let repo = res.match[2];
+
+    github.pullRequests.getAll({
+      owner,
+      repo,
+      direction: "asc",
+      state: "open",
+      sort: "created",
+    }, (err, response) => {
+      let output = '';
+      for (let i = 0; i < response.data.length; i++) {
+        let data = response.data[i];
+        output += `
+${data.title}, by ${data.user.login}.
+↳ ${data.url}
+`;
+      }
+      res.send(output);
+    });
+  });
 }
