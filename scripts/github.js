@@ -87,7 +87,7 @@ let printPrs = res => {
         for (let i = 0; i < response.data.length; i++) {
           let data = response.data[i];
           output += `${data.title}, by ${data.user.login}.
-  ↳ ${data.url}
+  ↳ ${data.html_url}
   `;
         }
         res.send(output);
