@@ -33,12 +33,14 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Distance leaders over the past seven days*\n"
+    let output = ":bicyclist: *Distance leaders over the past seven days*\n";
+    let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
-      let place_num = i + 1;
       let distance = sortable[i].distance * MILES_PER_METER;
-      if (distance > 0)
+      if (distance > 0) {
+        place_num++;
         output += ':place_' + place_num + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Number(distance).toFixed(2) + ' mi)\n';
+      }
     }
     return output;
   },
@@ -74,12 +76,14 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Longest ride leaders over the past seven days*\n"
+    let output = ":bicyclist: *Longest ride leaders over the past seven days*\n";
+    let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
-      let place_num = i + 1;
       let distance = sortable[i].longest_ride * MILES_PER_METER;
-      if (distance > 0)
+      if (distance > 0) {
+        place_num++;
         output += ':place_' + place_num + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Number(distance).toFixed(2) + ' mi)\n';
+      }
     }
     return output;
   },
@@ -112,12 +116,14 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Total elevation gain leaders over the past seven days*\n"
+    let output = ":bicyclist: *Total elevation gain leaders over the past seven days*\n";
+    let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
-      let place_num = i + 1;
       let distance = sortable[i].elevation_gain * FEET_PER_METER;
-      if (distance > 0)
+      if (distance > 0) {
+        place_num++;
         output += ':place_' + place_num + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Humanize.formatNumber(distance, 2) + ' ft)\n';
+      }
     }
     return output;
   }
