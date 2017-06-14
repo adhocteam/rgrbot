@@ -57,6 +57,10 @@ module.exports = function (robot) {
       sort: "created",
     }, printPrs(res));
 
+    github.pullRequests.getAll({owner, repo: "pac-etl", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    github.pullRequests.getAll({owner, repo: "qpp-netstorage", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    github.pullRequests.getAll({owner, repo: "qpp-eligibility-services", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    
     github.pullRequests.getAll({
       owner,
       repo: "qpp-deploy",
@@ -83,9 +87,12 @@ module.exports = function (robot) {
 let printPrs = res => {
   return (err, response) => {
     if (!err) {
-        let output = ':github:\n';
+        let output = '';
         for (let i = 0; i < response.data.length; i++) {
           let data = response.data[i];
+	  if (i === 0) {
+	      output += `:github: *${data.head.repo.name}*\n`;
+	  }
           output += `${data.title}, by ${data.user.login}.
   ↳ ${data.html_url}
   `;
