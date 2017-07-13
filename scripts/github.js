@@ -59,7 +59,7 @@ module.exports = function (robot) {
 
     github.pullRequests.getAll({owner, repo: "pac-etl", direction: "asc", state: "open", sort: "created" }, printPrs(res));
     github.pullRequests.getAll({owner, repo: "qpp-netstorage", direction: "asc", state: "open", sort: "created" }, printPrs(res));
-    github.pullRequests.getAll({owner, repo: "qpp-eligibility-services", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    github.pullRequests.getAll({owner, repo: "qpp-eligibility-service", direction: "asc", state: "open", sort: "created" }, printPrs(res));
     
     github.pullRequests.getAll({
       owner,
