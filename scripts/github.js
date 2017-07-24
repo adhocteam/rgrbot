@@ -34,7 +34,7 @@ githubCmsGov.authenticate({
 
 githubCom.authenticate({
     type: "basic",
-    username: process.env.HUBOT_GITHUB_USER,
+    username: process.env.HUBOT_GITHUB_USER2,
     password: process.env.HUBOT_GITHUB_TOKEN2
 });
 
