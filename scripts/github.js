@@ -1,6 +1,6 @@
 var GitHubApi = require("github");
 
-var github = new GitHubApi({
+var githubCmsGov = new GitHubApi({
     debug: true,
     protocol: "https",
     host: "github.cms.gov",
@@ -13,10 +13,29 @@ var github = new GitHubApi({
     timeout: 5000,
 });
 
-github.authenticate({
+var githubCom = new GitHubApi({
+    debug: true,
+    protocol: "https",
+    host: "api.github.com",
+    pathPrefix: "",
+    headers: {
+	"user-agent": "rgrbot",
+    },
+    Promise: require('bluebird'),
+    followRedirects: false,
+    timeout: 5000,
+});
+
+githubCmsGov.authenticate({
     type: "basic",
     username: process.env.HUBOT_GITHUB_USER,
     password: process.env.HUBOT_GITHUB_TOKEN
+});
+
+githubCom.authenticate({
+    type: "basic",
+    username: process.env.HUBOT_GITHUB_USER,
+    password: process.env.HUBOT_GITHUB_TOKEN2
 });
 
 module.exports = function (robot) {
@@ -26,7 +45,7 @@ module.exports = function (robot) {
     let repo = res.match[2];
     let number = res.match[3];
 
-    github.pullRequests.get({
+    githubCmsGov.pullRequests.get({
       owner: owner,
       repo: repo,
       number: number
@@ -41,7 +60,7 @@ module.exports = function (robot) {
 
   robot.hear(/list open qpp prs/i, function (res) {
     let owner = "qpp";
-    github.pullRequests.getAll({
+    githubCmsGov.pullRequests.getAll({
       owner,
       repo: "qpp-ui",
       direction: "asc",
@@ -49,7 +68,7 @@ module.exports = function (robot) {
       sort: "created",
     }, printPrs(res));
 
-    github.pullRequests.getAll({
+    githubCmsGov.pullRequests.getAll({
       owner,
       repo: "qpp-auth-service",
       direction: "asc",
@@ -57,13 +76,21 @@ module.exports = function (robot) {
       sort: "created",
     }, printPrs(res));
 
-    github.pullRequests.getAll({owner, repo: "pac-etl", direction: "asc", state: "open", sort: "created" }, printPrs(res));
-    github.pullRequests.getAll({owner, repo: "qpp-netstorage", direction: "asc", state: "open", sort: "created" }, printPrs(res));
-    github.pullRequests.getAll({owner, repo: "qpp-eligibility-service", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    githubCmsGov.pullRequests.getAll({owner, repo: "pac-etl", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    githubCmsGov.pullRequests.getAll({owner, repo: "qpp-netstorage", direction: "asc", state: "open", sort: "created" }, printPrs(res));
+    githubCmsGov.pullRequests.getAll({owner, repo: "qpp-eligibility-service", direction: "asc", state: "open", sort: "created" }, printPrs(res));
     
-    github.pullRequests.getAll({
+    githubCmsGov.pullRequests.getAll({
       owner,
       repo: "qpp-deploy",
+      direction: "asc",
+      state: "open",
+      sort: "created",
+    }, printPrs(res));
+
+    githubCom.pullRequests.getAll({
+      owner: "CMSgov",
+      repo: "qpp-style",
       direction: "asc",
       state: "open",
       sort: "created",
@@ -74,7 +101,7 @@ module.exports = function (robot) {
     let owner = res.match[1];
     let repo = res.match[2];
 
-    github.pullRequests.getAll({
+    githubCmsGov.pullRequests.getAll({
       owner,
       repo,
       direction: "asc",
