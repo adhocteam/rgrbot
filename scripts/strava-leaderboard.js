@@ -1,4 +1,5 @@
 const MILLISECONDS_PER_WEEK = 604800000;
+const MILLISECONDS_PER_MONTH = 30 * 24 * 60 * 60 * 1000;
 const MILES_PER_METER = 0.000621371;
 const FEET_PER_METER = 3.28084;
 
@@ -14,7 +15,7 @@ module.exports = {
           distance: 0,
         };
 
-      if (Date.now() - MILLISECONDS_PER_WEEK < Date.parse(activity.start_date) && activity.type === "Ride")
+      if (Date.now() - MILLISECONDS_PER_MONTH < Date.parse(activity.start_date) && activity.type === "Ride")
         users[activity.athlete.id].distance += activity.distance;
 
       return users;
@@ -33,7 +34,7 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Distance leaders over the past seven days*\n";
+    let output = ":bicyclist: *Distance leaders over the past thirty days*\n";
     let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
       let distance = sortable[i].distance * MILES_PER_METER;
@@ -54,7 +55,7 @@ module.exports = {
           longest_distance: 0,
         };
 
-      if (Date.now() - MILLISECONDS_PER_WEEK < Date.parse(activity.start_date) && activity.type === "Ride") {
+      if (Date.now() - MILLISECONDS_PER_MONTH < Date.parse(activity.start_date) && activity.type === "Ride") {
         let d = users[activity.athlete.id].longest_ride;
         users[activity.athlete.id].longest_ride = d > activity.distance ? d : activity.distance;
       }
@@ -76,7 +77,7 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Longest ride leaders over the past seven days*\n";
+    let output = ":bicyclist: *Longest ride leaders over the past thirty days*\n";
     let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
       let distance = sortable[i].longest_ride * MILES_PER_METER;
@@ -97,7 +98,7 @@ module.exports = {
           elevation_gain: 0,
         };
 
-      if (Date.now() - MILLISECONDS_PER_WEEK < Date.parse(activity.start_date) && activity.type === "Ride")
+      if (Date.now() - MILLISECONDS_PER_MONTH < Date.parse(activity.start_date) && activity.type === "Ride")
         users[activity.athlete.id].elevation_gain += activity.total_elevation_gain;
 
       return users;
@@ -116,7 +117,7 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Total elevation gain leaders over the past seven days*\n";
+    let output = ":bicyclist: *Total elevation gain leaders over the past thirty days*\n";
     let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
       let distance = sortable[i].elevation_gain * FEET_PER_METER;
