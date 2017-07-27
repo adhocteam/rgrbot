@@ -3,9 +3,14 @@ let leaderboard = require('./strava-leaderboard');
 
 const ADHOC_CLUB_ID = "262781";
 
+const options = {
+  id: ADHOC_CLUB_ID,
+  per_page: 200
+};
+
 module.exports = function (robot) {
   robot.hear(/strava leaderboard distance/i, function (res) {
-    strava.clubs.listActivities({ id: ADHOC_CLUB_ID }, function (err, payload) {
+    strava.clubs.listActivities(options, function (err, payload) {
       if (!err) {
         // let leaderboard = new StravaLeaderboard(activities);
         res.send(leaderboard.most_distance(payload));
@@ -17,7 +22,7 @@ module.exports = function (robot) {
   });
 
     robot.hear(/strava leaderboard longest/i, function (res) {
-    strava.clubs.listActivities({ id: ADHOC_CLUB_ID }, function (err, payload) {
+    strava.clubs.listActivities(options, function (err, payload) {
       if (!err) {
         // let leaderboard = new StravaLeaderboard(activities);
 
@@ -31,7 +36,7 @@ module.exports = function (robot) {
 
 
   robot.hear(/strava leaderboard elevation/i, function (res) {
-    strava.clubs.listActivities({ id: ADHOC_CLUB_ID }, function (err, payload) {
+    strava.clubs.listActivities(options, function (err, payload) {
       if (!err) {
         // let leaderboard = new StravaLeaderboard(activities);
 
