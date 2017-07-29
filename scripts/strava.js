@@ -21,7 +21,7 @@ module.exports = function (robot) {
     });
   });
 
-    robot.hear(/strava leaderboard longest/i, function (res) {
+  robot.hear(/strava leaderboard longest/i, function (res) {
     strava.clubs.listActivities(options, function (err, payload) {
       if (!err) {
         // let leaderboard = new StravaLeaderboard(activities);
@@ -41,6 +41,17 @@ module.exports = function (robot) {
         // let leaderboard = new StravaLeaderboard(activities);
 
         res.send(leaderboard.most_elev_gain(payload));
+      }
+      else {
+        console.log(err);
+      }
+    });
+  });
+
+  robot.hear(/strava monthly distance/i, function (res) {
+    strava.clubs.listActivities(options, function (err, payload) {
+      if (!err) {
+        res.send(leaderboard.monthly_distance(payload));
       }
       else {
         console.log(err);

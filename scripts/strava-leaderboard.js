@@ -5,7 +5,53 @@ const FEET_PER_METER = 3.28084;
 
 let Humanize = require('humanize-plus');
 
+const isInCurrentMonth = (date) => {
+  let currentMonth = new Date().getMonth();
+  let activityMonth = new Date(Date.parse(date)).getMonth();
+  return (Date.now() === Date.parse(date)) ? true : false;
+}
+
 module.exports = {
+  monthly_distance (activities) {
+    let memberTotalDistances = activities.reduce((users, activity) => {
+      if (users[activity.athlete.id] === undefined)
+        users[activity.athlete.id] = {
+          firstname: activity.athlete.firstname,
+          lastname: activity.athlete.lastname,
+          distance: 0,
+        };
+
+      if (isInCurrentMonth(activity.start_date) && activity.type === "Ride")
+        users[activity.athlete.id].distance += activity.distance;
+
+      return users;
+    }, {});
+
+    var sortable = [];
+    for (var member in memberTotalDistances)
+      sortable.push(memberTotalDistances[member]);
+
+    // sort by distance from high to low
+    sortable.sort((a, b) => {
+      if (a.distance < b.distance)
+        return 1;
+      if (a.distance > b.distance)
+        return -1;
+      return 0;
+    });
+
+    let output = `:bicyclist: *Distance leaders over the month of ${new Date().getMonth()}*\n`;
+    let place_num = 0;
+    for (let i = 0; i < sortable.length && i < 10; i++) {
+      let distance = sortable[i].distance * MILES_PER_METER;
+      if (distance > 0) {
+        place_num++;
+        output += ':place_' + place_num + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Number(distance).toFixed(2) + ' mi)\n';
+      }
+    }
+    return output;
+  },
+
   most_distance: activities => {
     let memberTotalDistances = activities.reduce((users, activity) => {
       if (users[activity.athlete.id] === undefined)
