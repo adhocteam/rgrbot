@@ -8,7 +8,7 @@ let Humanize = require('humanize-plus');
 const isInCurrentMonth = (date) => {
   let currentMonth = new Date().getMonth();
   let activityMonth = new Date(Date.parse(date)).getMonth();
-  return (Date.now() === Date.parse(date)) ? true : false;
+  return (currentMonth === activityMonth) ? true : false;
 }
 
 module.exports = {
