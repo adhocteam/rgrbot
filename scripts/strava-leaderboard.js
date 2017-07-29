@@ -5,6 +5,21 @@ const FEET_PER_METER = 3.28084;
 
 let Humanize = require('humanize-plus');
 
+const Months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 const isInCurrentMonth = (date) => {
   let currentMonth = new Date().getMonth();
   let activityMonth = new Date(Date.parse(date)).getMonth();
@@ -40,7 +55,7 @@ module.exports = {
       return 0;
     });
 
-    let output = `:bicyclist: *Distance leaders over the month of ${new Date().getMonth()}*\n`;
+    let output = `:bicyclist: *Distance leaders over the month of ${Months[new Date().getMonth()]}*\n`;
     let place_num = 0;
     for (let i = 0; i < sortable.length && i < 10; i++) {
       let distance = sortable[i].distance * MILES_PER_METER;
