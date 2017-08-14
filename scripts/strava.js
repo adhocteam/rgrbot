@@ -59,4 +59,15 @@ module.exports = function (robot) {
     });
   });
 
+  robot.hear(/strava monthly run distance/i, function (res) {
+    strava.clubs.listActivities(options, function (err, payload) {
+      if (!err) {
+        res.send(leaderboard.monthly_run_distance(payload));
+      }
+      else {
+        console.log(err);
+      }
+    });
+  });
+
 }
