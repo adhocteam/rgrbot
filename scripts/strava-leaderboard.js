@@ -228,5 +228,50 @@ module.exports = {
       }
     }
     return output;
+  },
+
+  monthly_bike_elev_over_distance: activities => {
+    let memberTotalElevGains = activities.reduce((users, activity) => {
+      if (users[activity.athlete.id] === undefined)
+        users[activity.athlete.id] = {
+          firstname: activity.athlete.firstname,
+          lastname: activity.athlete.lastname,
+          elevation_gain: 0,
+          distance: 0,
+          ratio: 0
+        };
+
+      if (isInCurrentMonth(activity.start_date) && activity.type === "Ride") {
+        users[activity.athlete.id].elevation_gain += activity.total_elevation_gain;
+        users[activity.athlete.id].distance += activity.distance;
+        users[activity.athlete.id].ratio = users[activity.athlete.id].distance > 0 ? users[activity.athlete.id].elevation_gain / users[activity.athlete.id].distance : 0;
+      }
+
+      return users;
+
+    }, {});
+
+    var sortable = [];
+    for (var member in memberTotalElevGains)
+      sortable.push(memberTotalElevGains[member]);
+
+    sortable.sort((a, b) => {
+      if (a.ratio < b.ratio)
+        return 1;
+      if (a.ratio > b.ratio)
+        return -1;
+      return 0;
+    });
+
+    let output = ":bicyclist: *Elevation/mileage leaders over the past thirty days*\n";
+    let place_num = 0;
+    for (let i = 0; i < sortable.length && i < 10; i++) {
+      let ratio = sortable[i].ratio * FEET_PER_METER / MILES_PER_METER;
+      if (ratio > 0) {
+        place_num++;
+        output += ':place_' + place_num + ': ' + sortable[i].firstname + ' ' + sortable[i].lastname + ' (' + Humanize.formatNumber(ratio, 2) + ' ft/mi)\n';
+      }
+    }
+    return output;
   }
 }
