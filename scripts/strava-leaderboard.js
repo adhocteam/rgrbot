@@ -2,6 +2,7 @@ const MILLISECONDS_PER_WEEK = 604800000;
 const MILLISECONDS_PER_MONTH = 30 * 24 * 60 * 60 * 1000;
 const MILES_PER_METER = 0.000621371;
 const FEET_PER_METER = 3.28084;
+const leaderboardSize = 10;
 
 let Humanize = require('humanize-plus');
 
@@ -57,7 +58,7 @@ module.exports = {
 
     let output = `:runner: *Distance leaders over the month of ${Months[new Date().getMonth()]}*\n`;
     let place_num = 0;
-    for (let i = 0; i < sortable.length && i < 10; i++) {
+    for (let i = 0; i < sortable.length && i < leaderboardSize; i++) {
       let distance = sortable[i].distance * MILES_PER_METER;
       if (distance > 0) {
         place_num++;
@@ -97,7 +98,7 @@ module.exports = {
 
     let output = `:bicyclist: *Distance leaders over the month of ${Months[new Date().getMonth()]}*\n`;
     let place_num = 0;
-    for (let i = 0; i < sortable.length && i < 10; i++) {
+    for (let i = 0; i < sortable.length && i < leaderboardSize; i++) {
       let distance = sortable[i].distance * MILES_PER_METER;
       if (distance > 0) {
         place_num++;
@@ -137,7 +138,7 @@ module.exports = {
 
     let output = ":bicyclist: *Distance leaders over the past thirty days*\n";
     let place_num = 0;
-    for (let i = 0; i < sortable.length && i < 10; i++) {
+    for (let i = 0; i < sortable.length && i < leaderboardSize; i++) {
       let distance = sortable[i].distance * MILES_PER_METER;
       if (distance > 0) {
         place_num++;
@@ -180,7 +181,7 @@ module.exports = {
 
     let output = ":bicyclist: *Longest ride leaders over the past thirty days*\n";
     let place_num = 0;
-    for (let i = 0; i < sortable.length && i < 10; i++) {
+    for (let i = 0; i < sortable.length && i < leaderboardSize; i++) {
       let distance = sortable[i].longest_ride * MILES_PER_METER;
       if (distance > 0) {
         place_num++;
@@ -220,7 +221,7 @@ module.exports = {
 
     let output = ":bicyclist: *Total elevation gain leaders over the past thirty days*\n";
     let place_num = 0;
-    for (let i = 0; i < sortable.length && i < 10; i++) {
+    for (let i = 0; i < sortable.length && i < leaderboardSize; i++) {
       let distance = sortable[i].elevation_gain * FEET_PER_METER;
       if (distance > 0) {
         place_num++;
@@ -263,9 +264,9 @@ module.exports = {
       return 0;
     });
 
-    let output = ":bicyclist: *Elevation/mileage leaders over the past thirty days*\n";
+    let output = `:bicyclist: *Elevation/mileage leaders for the month of ${Months[new Date().getMonth()]}*\n`;
     let place_num = 0;
-    for (let i = 0; i < sortable.length && i < 10; i++) {
+    for (let i = 0; i < sortable.length && i < leaderboardSize; i++) {
       let ratio = sortable[i].ratio * FEET_PER_METER / MILES_PER_METER;
       if (ratio > 0) {
         place_num++;
