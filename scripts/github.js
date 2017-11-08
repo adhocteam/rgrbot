@@ -100,14 +100,27 @@ module.exports = function (robot) {
   robot.hear(/list open prs for (.*)\/(.*)/i, function (res) {
     let owner = res.match[1];
     let repo = res.match[2];
-
-    githubCmsGov.pullRequests.getAll({
-      owner,
-      repo,
-      direction: "asc",
-      state: "open",
-      sort: "created",
-    }, printPrs(res));
+    
+    if(owner === 'qpp') {
+      githubCmsGov.pullRequests.getAll({
+        owner,
+        repo,
+        direction: "asc",
+        state: "open",
+        sort: "created",
+      }, printPrs(res));
+    }
+    
+    if(owner === 'CMSgov') {
+       githubCom.pullRequests.getAll({
+        owner,
+        repo,
+        direction: "asc",
+        state: "open",
+        sort: "created",
+      }, printPrs(res));
+    }
+    
   });
 }
 
