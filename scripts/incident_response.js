@@ -11,7 +11,7 @@ const incident_plan = `
 
 *4. Establish lines of communication (video and/or phone)*
 
-*Resources:* QPP's Incident Response Plan Documentation
+*Resources:* QPP's Incident Response Plan Documentation: https://confluence.cms.gov/display/QPPGUIDE/QPP+Incident+Response+Plan
 `;
 
 module.exports = function (robot) {
