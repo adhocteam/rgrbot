@@ -14,6 +14,7 @@ const incident_plan = `
 *Resources:* 
 - QPP's Incident Response Plan Documentation: https://confluence.cms.gov/display/QPPGUIDE/QPP+Incident+Response+Plan
 - QPP Pagerduty Teams: https://confluence.cms.gov/display/QPPGUIDE/Incident+Response+Teams
+`;
 
 module.exports = function (robot) {
     robot.hear(/activate incident response|start incident response|incident response/i , function (res) {
